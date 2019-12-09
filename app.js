@@ -4,12 +4,18 @@ const path = require('path');
 
 const {app, BrowserWindow, Menu} = electron;
 
+//Set ENV
+process.env.NODE_ENV = 'test';
+
 let mainWindow;
 
 //Listen for app to be ready
 app.on('ready', function(){
     //Create new window
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+        width:800,
+        height:800
+    });
     //Load html file into window
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
@@ -34,6 +40,7 @@ const mainMenuTemplate = [
         submenu:[
             {
                 label: 'Exit',
+                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
                 click(){
                     app.quit();
                 }
@@ -41,3 +48,21 @@ const mainMenuTemplate = [
         ]
     }
 ];
+
+if(process.env.NODE_ENV !== 'production'){
+    mainMenuTemplate.push({
+        label: 'Developer Tools',
+        submenu:[
+            {
+                label: 'Toggle DevTools',
+                accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
+                click(item, focusedWindow){
+                    focusedWindow.toggleDevTools();
+                }
+            },
+            {
+                role: 'reload'
+            }
+        ]
+    });
+}

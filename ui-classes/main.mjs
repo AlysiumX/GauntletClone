@@ -9,19 +9,4 @@ window.onload = function()
     
     var game = new Game(1000, 800);
     engine.host(game);
-
-    // engine.createNewGameWithSize( );
-
-    // let gameCanvas = new CanvasWrapper();
-    // gameCanvas.addCanvas();
-    // gameCanvas.setCanvasSize(500, 500);
-    // gameCanvas.setBackgroundColor("Black");
-    // document.body.appendChild(gameCanvas.canvas);
-    // var canvas = document.createElement("canvas");
-    // canvas.width = 500;
-    // canvas.height = 600;
-    // var ctx = canvas.getContext("2d");
-    // ctx.fillStyle = "Black";
-    // ctx.fillRect(0, 0, canvas.width, canvas.height);
-    // 
 }
