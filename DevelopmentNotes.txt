@@ -1,0 +1,8 @@
+The engine class should be the only things that know about the main document
+element out side of the main.js to pass it.
+
+
+Structure
+engine
+    game
+        canvas

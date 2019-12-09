@@ -1,0 +1,10 @@
+Simple game
+
+-Farm sim
+-Blacksmith with customers?
+-Tower defense w/ more rts features
+-Gauntlet clone - Simple shoot em
+ -Base comes first, just a game where you can shoot monsters that has dungeon that go into deeper levels
+ -Hub style (Diablo Style)
+ -Weapon skills?
+ 
