@@ -7,10 +7,8 @@ window.onload = function()
     let browserWrapper = new BrowserWrapper(window, document);
     let engine = new Engine(browserWrapper);
     
-    var game = new Game(500, 500);
+    var game = new Game(1000, 800);
     engine.host(game);
-
-        
 
     // engine.createNewGameWithSize( );
 
@@ -25,6 +23,5 @@ window.onload = function()
     // var ctx = canvas.getContext("2d");
     // ctx.fillStyle = "Black";
     // ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     // 
 }
