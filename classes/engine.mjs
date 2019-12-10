@@ -14,10 +14,18 @@ export default class Engine
     host(game)
     {
         this.game = game;
-        this.gameCanvas = this.browserWrapper.createCanvas(game.width, game.height);
+        this.gameCanvas = this.browserWrapper.createCanvas(
+            this.game.width * this.game.scale, 
+            this.game.height * this.game.scale);
         this.gameContext = this.gameCanvas.get2dContext();
         this.browserWrapper.addToBody(this.gameCanvas.canvas);
+        this.scaleContent();
         this.gameLoop();
+    }
+
+    scaleContent()
+    {
+        this.gameContext.scale(this.game.scale, this.game.scale);
     }
 
     //TODO : Look into pixi integration.

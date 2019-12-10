@@ -1,8 +1,8 @@
-const electron = require('electron');
+const {app, ipcMain, BrowserWindow, Menu} = require('electron');
 const url = require('url');
 const path = require('path');
 
-const {app, BrowserWindow, Menu} = electron;
+
 
 //Set ENV
 process.env.NODE_ENV = 'test';
@@ -13,8 +13,13 @@ let mainWindow;
 app.on('ready', function(){
     //Create new window
     mainWindow = new BrowserWindow({
-        width:800,
-        height:800
+        width: 320 * 3 + 50,
+        height: 240 * 3 + 50,
+        webPreferences: {
+            nodeIntegration: true
+        },
+        // frame: false, //Left on for debug, plan on turning this off later.
+        // transparent: true
     });
     //Load html file into window
     mainWindow.loadURL(url.format({
@@ -22,11 +27,12 @@ app.on('ready', function(){
         protocal:'file:',
         slashes:true
     }));
-
     mainWindow.on('closed', () => {
         mainWindow = null
     })
-
+    ipcMain.on('change-screen-size', (event, args) =>{
+        mainWindow.setSize(320, 240);
+    })
     //Build menu from template
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     //Insert menu
@@ -40,7 +46,7 @@ const mainMenuTemplate = [
         submenu:[
             {
                 label: 'Exit',
-                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Ctrl+Q',
+                accelerator: process.platform == 'darwin' ? 'Command+Q' : 'Escape', //For dev purposes
                 click(){
                     app.quit();
                 }
@@ -55,7 +61,7 @@ if(process.env.NODE_ENV !== 'production'){
         submenu:[
             {
                 label: 'Toggle DevTools',
-                accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
+                accelerator: process.platform == 'darwin' ? 'Command+I' : 'F12',
                 click(item, focusedWindow){
                     focusedWindow.toggleDevTools();
                 }
