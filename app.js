@@ -2,8 +2,6 @@ const {app, ipcMain, BrowserWindow, Menu} = require('electron');
 const url = require('url');
 const path = require('path');
 
-
-
 //Set ENV
 process.env.NODE_ENV = 'test';
 
@@ -13,13 +11,11 @@ let mainWindow;
 app.on('ready', function(){
     //Create new window
     mainWindow = new BrowserWindow({
-        width: 320 * 3 + 50,
-        height: 240 * 3 + 50,
         webPreferences: {
             nodeIntegration: true
         },
-        // frame: false, //Left on for debug, plan on turning this off later.
-        // transparent: true
+        //frame: false, //Left on for debug, plan on turning this off later.
+        //transparent: true
     });
     //Load html file into window
     mainWindow.loadURL(url.format({
@@ -29,10 +25,20 @@ app.on('ready', function(){
     }));
     mainWindow.on('closed', () => {
         mainWindow = null
-    })
-    ipcMain.on('change-screen-size', (event, args) =>{
-        mainWindow.setSize(320, 240);
-    })
+    });
+    ipcMain.on('change-screen-size', (event, width, height) =>{
+        mainWindow.setSize(width + 30, height + 75);
+    });
+    ipcMain.on('set-full-screen', (event, args) =>{
+        mainWindow.maximize();
+    });
+    mainWindow.on('maximize', () => {
+        let width = mainWindow.getSize()[0];
+        let height = mainWindow.getSize()[1];
+        //mainWindow.webContents.send('message-sent', width);
+        mainWindow.webContents.send('screen-size-max', width, height);
+        //ipcMain.send('screen-size-max', mainWindow.width, mainWindow.height );
+    });
     //Build menu from template
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     //Insert menu
